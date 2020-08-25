@@ -25,4 +25,4 @@ async def on_message(message):
         await message.channel.send(tsReq.stroutStats(ret))
         return
 
-client.run('NzQ3ODkyNjYzNDUzMzUxOTQ3.X0VfUg.EAry9mTVbWPrrc1D0xgcd86d4nM')
+client.run("hello world")
