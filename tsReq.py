@@ -17,23 +17,25 @@ def stdoutStats(stats):
 
 def stroutStats(stats):
     ret = ""
+    k = 0
+    d = 0
     for key in stats:
         ret+=("-----------\n")
         ret+=(key+"\n")
         for key2 in stats[key]:
             if "Overall air frags" in key2:
-                k = int(stats[key][key2]) 
+                k += int(stats[key][key2]) 
             if "Deaths" in key2:
-                d = int(stats[key][key2])
+                d += int(stats[key][key2])
             ret+=("     {cat} : {entry} \n".format(cat=key2, entry=stats[key][key2]))
     try:
         kd = k/d
         if kd<1:
-            tag = "this is a monke\n"
+            tag = "\n ... \nthis is a monke\n"
         elif kd<3:
-            tag = "they ok\n"
+            tag = "\n ... \nthey ok\n"
         else:
-            tag = "it needs to stop camping af\n"
+            tag = "\n ... \nit needs to stop camping af\n"
         
     except:
         tag = ""
