@@ -25,4 +25,4 @@ async def on_message(message):
         await message.channel.send("```\nShame on " + commands[1] + "\n" + tsReq.stroutStats(ret)+ "```")
         return
 
-client.run("hello world")
+client.run()
