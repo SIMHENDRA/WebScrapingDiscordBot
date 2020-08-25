@@ -22,7 +22,7 @@ async def on_message(message):
             return
         print("-----"+str(message.author)+"-----")
         tsReq.stdoutStats(ret)
-        await message.channel.send(tsReq.stroutStats(ret))
+        await message.channel.send("```\nShame on " + commands[1] + "\n" + tsReq.stroutStats(ret)+ "```")
         return
 
 client.run("hello world")

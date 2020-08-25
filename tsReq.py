@@ -16,14 +16,29 @@ def stdoutStats(stats):
             print(("     {cat} : {entry}".format(cat=key2, entry=stats[key][key2])))
 
 def stroutStats(stats):
-    ret = "```\n"
+    ret = ""
     for key in stats:
         ret+=("-----------\n")
         ret+=(key+"\n")
         for key2 in stats[key]:
+            if "Overall air frags" in key2:
+                k = int(stats[key][key2]) 
+            if "Deaths" in key2:
+                d = int(stats[key][key2])
             ret+=("     {cat} : {entry} \n".format(cat=key2, entry=stats[key][key2]))
-    ret += "```"
-    return ret
+    try:
+        kd = k/d
+        if kd<1:
+            tag = "this is a monke\n"
+        elif kd<3:
+            tag = "they ok\n"
+        else:
+            tag = "it needs to stop camping af\n"
+        
+    except:
+        tag = ""
+  
+    return ret+tag
 
 def getStats(username, req):
     
