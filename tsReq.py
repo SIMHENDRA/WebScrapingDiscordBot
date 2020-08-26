@@ -2,10 +2,23 @@ import requests
 from bs4 import BeautifulSoup as soup
 import re
 import os
+import heapq
 
 def cleaner(toClean):
         toClean = toClean.lower()
         return re.sub("[^a-z0-9]","", toClean)
+
+def haskey(dic, key):
+    if key in dic.keys():
+        return True
+    else: 
+        return False
+
+def dcpy(dic):
+    ret = {}
+    for key in dic.keys():
+        ret[key] = dic[key]
+    return ret
 
 def stdoutStats(stats):
     for key in stats:
@@ -15,7 +28,7 @@ def stdoutStats(stats):
         for key2 in stats[key]:
             print(("     {cat} : {entry}".format(cat=key2, entry=stats[key][key2])))
 
-def stroutStats(stats):
+def strTag(stats):
     ret = ""
     k = 0
     d = 0
@@ -35,16 +48,42 @@ def stroutStats(stats):
         elif kd<3:
             tag = "\n ... \nthey ok\n"
         else:
-            tag = "\n ... \nit needs to stop camping af\n"
-        
+            tag = "\n ... \nit needs to stop camping af\n"       
     except:
-        tag = ""
-  
+        tag = ""  
     return ret+tag
 
-def getStats(username, req):
+def stroutStats(stats):
+    ret = ""
+    for key in stats:
+        ret+=("-----------\n")
+        ret+=(key+"\n")
+        for key2 in stats[key]:
+            ret+=("     {cat} : {entry} \n".format(cat=key2, entry=stats[key][key2]))
+    return ret
+
+def stroutArr(plist):
+    ret = ""
+    for plane in plist:
+        ret += ("-----------\n")
+        ret += plane["plane"] + "\n" 
+        for key2 in plane:
+            if "plane" not in key2:
+                ret+=("     {cat} : {entry} \n".format(cat=key2, entry=plane[key2]))
+    return ret
+
+
+def stroutPlane(plane, name):
+    ret = "-----------\n"
+    ret += (name + "\n")
+    for key in plane:
+        ret+=("     {cat} : {entry} \n".format(cat=key, entry=str(plane[key])))
+    return ret
+
+
+def getStats(username, role="fighters"):
     
-    myurl = "http://thunderskill.com/en/stat/"+username+"/vehicles/r#type=aviation&role=all&country=all"
+    myurl = "http://thunderskill.com/en/stat/"+username+"/vehicles/r#type=aviation&role="+role+"&country=all"
 
     response = requests.get(myurl)
 
@@ -77,16 +116,58 @@ def getStats(username, req):
                 continue
             for tag in params:
                 if tag in line:
-                    stats[plane][re.search("[A-Za-z ]+",line).group()] = re.findall('\d+', line)[0]
+                    stats[plane][re.search("[A-Za-z ]+",line).group()] = int(re.findall('\d+', line)[0])
                     break
     infile.close()
-    
+
+    os.remove("resp2.txt")
+    return stats
+
+def getReq(stats, req):
     ret = {}
     search = cleaner(req)
     for key in stats:
         if search in key:
             ret[key] = stats[key]
-
-    os.remove("resp2.txt")
     return ret
+
+def getWorst(stats, battlemin=50, ct=3):
+    h = []
+    ret = []
+    for plane in stats:
+        if getKD(stats[plane]) and haskey(stats[plane], "Battles") and stats[plane]["Battles"]>=battlemin:
+            newDict = dcpy(stats[plane])
+            newDict["plane"] = plane
+            heapq.heappush(h, (getKD(newDict), newDict))
+    
+    for i in range(0,ct):
+        ret.append(heapq.heappop(h)[1])
+    return ret
+    
+
+def getKD(plane):
+    if haskey(plane,"Overall air frags") and haskey(plane,"Deaths"):
+        try:
+            ret = plane["Overall air frags"]/plane["Deaths"]
+            return ret
+        except:
+            ret = 999999999999
+            return ret
+    else:
+        return None
+
+
+
+"""
+me = getStats("simhendramadhya_", "fighters")
+worst = getWorst(me, 50, 3)
+print(stroutArr(worst))
+"""
+def req_stat_plane(username, searchStr):
+    return stroutStats(getReq(getStats(username), searchStr))
+
+def req_worst(username, battlemin=50, ct=3):
+    return stroutArr(getWorst(getStats(username),battlemin, ct))
+
+# print(req_worst("TheCorkster"))
 
