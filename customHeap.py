@@ -51,38 +51,39 @@ class objHeap:
         self.H.append(plane)
         ind = self.size-1
         while (ind != 0):
-            par = getPar(ind)
-            if compare(plane, self.H(par)):
-                swap(ind, par)
+            par = self.getPar(ind)
+            if self.compare(plane, self.H(par)):
+                self.swap(ind, par)
                 ind = par
             else:
                 break
+
     def adj(self, ind):
         if isLeaf(ind):
             return
-        r = getR(ind)
-        m = getL(ind)
+        r = self.getR(ind)
+        m = self.getL(ind)
         if r == -1:
-            if compare(self.H[m], self.H[ind]):
-                swap(m, ind)
-                adj(m)
+            if self.compare(self.H[m], self.H[ind]):
+                self.swap(m, ind)
+                self.adj(m)
             return
         else:
-            if compare(self.H[m], self.H[r]):
-                if compare(self.H[m], self.H[ind]):
-                    swap(m, ind)
-                    adj(m)
+            if self.compare(self.H[m], self.H[r]):
+                if self.compare(self.H[m], self.H[ind]):
+                    self.swap(m, ind)
+                    self.adj(m)
             else:
-                if compare(self.H[r], self.H[ind]):
-                    swap(r, ind)
-                    adj(r)
+                if self.compare(self.H[r], self.H[ind]):
+                    self.swap(r, ind)
+                    self.adj(r)
             return
 
     def pop(self):
         self.size -= 1
         ret = self.H[0]
         self.H[0] = self.H[size-1]
-        adj(0)
+        self.adj(0)
         return ret
 
         
