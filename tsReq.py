@@ -81,7 +81,7 @@ def stroutArr(plist):
         ret += ("-----------\n")
         ret += plane["plane"] + "\n" 
         for key2 in plane:
-            if "plane" not in key2 and "Victories" not in key2 and "Defeats" not in key2 and "KD" not in key2:
+            if "plane" not in key2 and "Victories" not in key2 and "Defeats" not in key2 and "KD" not in key2 and "KB" not in key2:
                 ret+=("     {cat} : {entry} \n".format(cat=key2, entry=plane[key2]))
     return ret
 
@@ -144,13 +144,14 @@ def getReq(stats, req):
             ret[key] = stats[key]
     return ret
 
-def getWorst(stats, battlemin, ct):
-    h = CH.objHeap("KD", False)
+def getWorst(stats, battlemin, ct, sortby):
+    h = CH.objHeap(sortby, False)
     ret = []
     for plane in stats:
         if not checkEntry(stats[plane]):
             continue
         stats[plane]["KD"] = getKD(stats[plane])
+        stats[plane]["KB"] = getKB(stats[plane])
         if stats[plane]["Battles"] >= battlemin:
             newDict = dcpy(stats[plane])
             newDict["plane"] = plane
@@ -160,13 +161,14 @@ def getWorst(stats, battlemin, ct):
         ret.append(h.pop())
     return ret
 
-def getBest(stats, battlemin, ct):
-    h = CH.objHeap("KD", True)
+def getBest(stats, battlemin, ct, sortby):
+    h = CH.objHeap(sortby, True)
     ret = []
     for plane in stats:
         if not checkEntry(stats[plane]):
             continue
         stats[plane]["KD"] = getKD(stats[plane])
+        stats[plane]["KB"] = getKB(stats[plane])
         if stats[plane]["Battles"] >= battlemin:
             newDict = dcpy(stats[plane])
             newDict["plane"] = plane
@@ -188,6 +190,16 @@ def getKD(plane):
     else:
         return None
 
+def getKB(plane):
+    if haskey(plane,"Overall air frags") and haskey(plane,"Battles"):
+        try:
+            ret = plane["Overall air frags"]/plane["Battles"]
+            return ret
+        except:
+            ret = 999999999999
+            return ret
+    else:
+        return None
 
 
 
@@ -195,11 +207,11 @@ def getKD(plane):
 def req_stat_plane(username, searchStr):
     return stroutStats(getReq(getStats(username), searchStr))
 
-def req_worst(username, battlemin, ct):
-    return stroutArr(getWorst(getStats(username),battlemin, ct))
+def req_worst(username, battlemin, ct, sortby):
+    return stroutArr(getWorst(getStats(username),battlemin, ct, sortby))
 
-def req_best(username, battlemin, ct):
-    return stroutArr(getBest(getStats(username),battlemin,ct))
+def req_best(username, battlemin, ct, sortby):
+    return stroutArr(getBest(getStats(username),battlemin,ct, sortby))
 
 # print(req_worst("TheCorkster"))
 
