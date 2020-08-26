@@ -131,7 +131,7 @@ def getReq(stats, req):
             ret[key] = stats[key]
     return ret
 
-def getWorst(stats, battlemin=50, ct=3):
+def getWorst(stats, battlemin, ct):
     h = []
     ret = []
     for plane in stats:
@@ -166,7 +166,7 @@ print(stroutArr(worst))
 def req_stat_plane(username, searchStr):
     return stroutStats(getReq(getStats(username), searchStr))
 
-def req_worst(username, battlemin=50, ct=3):
+def req_worst(username, battlemin, ct):
     return stroutArr(getWorst(getStats(username),battlemin, ct))
 
 # print(req_worst("TheCorkster"))

@@ -26,7 +26,7 @@ async def on_message(message):
             if len(commands) == 3:
                 await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1],50,commands[2]) + "```" )
             elif len(commands) == 2:
-                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1]) + "```" )
+                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1],50,3) + "```" )
             elif len(commands) == 4:
                 await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1],commands[3],commands[2]) + "```" )
             return
