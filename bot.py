@@ -32,6 +32,18 @@ async def on_message(message):
             return
         except:
             await message.channel.send("```\n"+"Shit is a little buggy, but you might have BAD INPUT\n"+"```")
+    elif message.content.startswith("flex"):
+        commands = message.content.split(" ")
+        try:
+            if len(commands) == 3:
+                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_best(commands[1],50,int(commands[2])) + "```" )
+            elif len(commands) == 2:
+                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_best(commands[1],50,3) + "```" )
+            elif len(commands) == 4:
+                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_best(commands[1],int(commands[3]),int(commands[2])) + "```" )
+            return
+        except:
+            await message.channel.send("```\n"+"Shit is a little buggy, but you might have BAD INPUT\n"+"```")
     return
 
 client.run()

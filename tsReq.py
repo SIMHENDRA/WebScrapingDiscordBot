@@ -143,6 +143,19 @@ def getWorst(stats, battlemin, ct):
     for i in range(0,ct):
         ret.append(heapq.heappop(h)[1])
     return ret
+
+def getBest(stats, battlemin, ct):
+    h = []
+    ret = []
+    for plane in stats:
+        if getKD(stats[plane]) and haskey(stats[plane], "Battles") and stats[plane]["Battles"]>=battlemin:
+            newDict = dcpy(stats[plane])
+            newDict["plane"] = plane
+            heapq.heappush(h, ((1/getKD(newDict)), newDict))
+    
+    for i in range(0,ct):
+        ret.append(heapq.heappop(h)[1])
+    return ret
     
 
 def getKD(plane):
@@ -168,6 +181,9 @@ def req_stat_plane(username, searchStr):
 
 def req_worst(username, battlemin, ct):
     return stroutArr(getWorst(getStats(username),battlemin, ct))
+    
+def req_best(username, battlemin, ct):
+    return stroutArr(getBest(getStats(username),battlemin,ct))
 
 # print(req_worst("TheCorkster"))
 
