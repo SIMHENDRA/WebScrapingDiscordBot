@@ -82,7 +82,7 @@ class objHeap:
     def pop(self):
         self.size -= 1
         ret = self.H[0]
-        self.H[0] = self.H[size-1]
+        self.H[0] = self.H[self.size-1]
         self.adj(0)
         return ret
 
