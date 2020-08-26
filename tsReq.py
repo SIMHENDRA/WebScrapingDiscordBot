@@ -20,7 +20,14 @@ def dcpy(dic):
         ret[key] = dic[key]
     return ret
 
-def checkEntry(entry, params):
+def checkEntry(entry):
+    params = [
+        "Battles",
+        "Victories",
+        "Defeats",
+        "Deaths",
+        "Overall air frags"
+    ]
     for key in params:
         if key not in entry.keys():
             return False
@@ -116,13 +123,7 @@ def getStats(username, role="fighters"):
        
     with open("resp2.txt", "r", encoding="utf-8") as infile:
         for line in infile:
-            if re.search("^[ ][a-zA-z0-9]+", line) and "General" not in line:
-                if plane != "" :
-                    if not checkEntry(stats[plane],params):
-                        del stats[plane]  
-                    else:
-                        stats[plane]["KD"] = getKD(stats[plane])  
-                
+            if re.search("^[ ][a-zA-z0-9]+", line) and "General" not in line:  
                 plane = cleaner(line.strip())
                 stats[plane] = {}
                 continue
@@ -147,6 +148,8 @@ def getWorst(stats, battlemin, ct):
     h = CH.objHeap("KD", False)
     ret = []
     for plane in stats:
+        if not checkEntry(stats[plane]):
+            continue
         stats[plane]["KD"] = getKD(stats[plane])
         if stats[plane]["Battles"] >= battlemin:
             newDict = dcpy(stats[plane])
@@ -161,6 +164,8 @@ def getBest(stats, battlemin, ct):
     h = CH.objHeap("KD", True)
     ret = []
     for plane in stats:
+        if not checkEntry(stats[plane]):
+            continue
         stats[plane]["KD"] = getKD(stats[plane])
         if stats[plane]["Battles"] >= battlemin:
             newDict = dcpy(stats[plane])
