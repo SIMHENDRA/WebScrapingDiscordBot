@@ -52,7 +52,7 @@ class objHeap:
         ind = self.size-1
         while (ind != 0):
             par = self.getPar(ind)
-            if self.priocomp(plane, self.H(par)):
+            if self.priocomp(plane, self.H[par]):
                 self.swap(ind, par)
                 ind = par
             else:
