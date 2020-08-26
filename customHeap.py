@@ -7,49 +7,6 @@ class objHeap:
         self.dir = isMaxHeap
         self.size = 0
 
-    def push(self, plane):
-        self.size += 1
-        self.H.append(plane)
-        ind = self.size-1
-        while (ind != 0):
-            par = getPar(ind)
-            if compare(plane, self.H(par)):
-                swap(ind, par)
-                ind = par
-            else:
-                break
-    
-    def pop(self):
-        self.size -= 1
-        ret = self.H[0]
-        self.H[0] = self.H[size-1]
-        adj(0)
-        return ret
-
-        
-    def adj(self, ind):
-        if isLeaf(ind):
-            return
-        r = getR(ind)
-        m = getL(ind)
-        if r == -1:
-            if compare(self.H[m], self.H[ind]):
-                swap(m, ind)
-                adj(m)
-            return
-        else:
-            if compare(self.H[m], self.H[r]):
-                if compare(self.H[m], self.H[ind]):
-                    swap(m, ind)
-                    adj(m)
-            else:
-                if compare(self.H[r], self.H[ind]):
-                    swap(r, ind)
-                    adj(r)
-            return
-        
-
-
     def compare(self, A, B): #returns true if A has higher priority than B, False if lower or equal priority to B
         if dir:
             if A[cat] > B[cat]:
@@ -88,3 +45,49 @@ class objHeap:
         self.H[indA] = self.H[indB]
         self.H[indB] = temp
         return
+
+    def push(self, plane):
+        self.size += 1
+        self.H.append(plane)
+        ind = self.size-1
+        while (ind != 0):
+            par = getPar(ind)
+            if compare(plane, self.H(par)):
+                swap(ind, par)
+                ind = par
+            else:
+                break
+    def adj(self, ind):
+        if isLeaf(ind):
+            return
+        r = getR(ind)
+        m = getL(ind)
+        if r == -1:
+            if compare(self.H[m], self.H[ind]):
+                swap(m, ind)
+                adj(m)
+            return
+        else:
+            if compare(self.H[m], self.H[r]):
+                if compare(self.H[m], self.H[ind]):
+                    swap(m, ind)
+                    adj(m)
+            else:
+                if compare(self.H[r], self.H[ind]):
+                    swap(r, ind)
+                    adj(r)
+            return
+
+    def pop(self):
+        self.size -= 1
+        ret = self.H[0]
+        self.H[0] = self.H[size-1]
+        adj(0)
+        return ret
+
+        
+    
+        
+
+
+    
