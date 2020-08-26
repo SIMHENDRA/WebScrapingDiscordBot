@@ -9,12 +9,12 @@ class objHeap:
 
     def priocomp(self, A, B): #returns true if A has higher priority than B, False if lower or equal priority to B
         if dir:
-            if A[cat] > B[cat]:
+            if A[self.cat] > B[self.cat]:
                 return True
             else:
                 return False
         else:
-            if A[cat] < B[cat]:
+            if A[self.cat] < B[self.cat]:
                 return True
             else:
                 return False
