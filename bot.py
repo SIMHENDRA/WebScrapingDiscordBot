@@ -15,14 +15,23 @@ async def on_message(message):
     if message.content.startswith('shame'):
         commands = message.content.split(" ")
         try:
-            if len(commands) == 3: 
-                await message.channel.send("```\nShame on " + commands[1] + "\n" + tsReq.req_stat_plane(commands[1],commands[2])+ "```")
-            elif len(commands) == 2:
-                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1]) + "```" )
+            await message.channel.send("```\nShame on " + commands[1] + "\n" + tsReq.req_stat_plane(commands[1],commands[2])+ "```")
             return
         except:
             await message.channel.send("```\nBad Input\n```")
             return
-
-
+    elif message.content.startswith('pain'):
+        commands = message.content.split(" ")
+        try:
+            if len(commands) == 3:
+                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1],50,commands[2]) + "```" )
+            elif len(commands) == 2:
+                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1]) + "```" )
+            elif len(commands == 4):
+                await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1],commands[3],commands[2]) + "```" )
+            return
+        except:
+            await message.channel.send("```\n"+"Shit is a little buggy, but you might have BAD INPUT\n"+"```")
+    return
+    
 client.run()
