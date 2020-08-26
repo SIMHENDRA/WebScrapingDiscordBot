@@ -27,11 +27,11 @@ async def on_message(message):
                 await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1],50,commands[2]) + "```" )
             elif len(commands) == 2:
                 await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1]) + "```" )
-            elif len(commands == 4):
+            elif len(commands) == 4:
                 await message.channel.send("```\n" + commands[1] + " is trash\n" + tsReq.req_worst(commands[1],commands[3],commands[2]) + "```" )
             return
         except:
             await message.channel.send("```\n"+"Shit is a little buggy, but you might have BAD INPUT\n"+"```")
     return
-    
+
 client.run()
