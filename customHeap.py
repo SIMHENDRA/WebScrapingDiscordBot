@@ -59,7 +59,7 @@ class objHeap:
                 break
 
     def adj(self, ind):
-        if isLeaf(ind):
+        if self.isLeaf(ind):
             return
         r = self.getR(ind)
         m = self.getL(ind)
