@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup as soup
 import re
 import os
-import heapq
+import customHeap as CH
 
 def cleaner(toClean):
         toClean = toClean.lower()
@@ -19,6 +19,12 @@ def dcpy(dic):
     for key in dic.keys():
         ret[key] = dic[key]
     return ret
+
+def checkEntry(entry, params):
+    for key in params:
+        if key not in entry.keys():
+            return False
+    return True
 
 def stdoutStats(stats):
     for key in stats:
@@ -110,7 +116,13 @@ def getStats(username, role="fighters"):
        
     with open("resp2.txt", "r", encoding="utf-8") as infile:
         for line in infile:
-            if re.search("^[ ][a-zA-z0-9]+", line) and "General" not in line:            
+            if re.search("^[ ][a-zA-z0-9]+", line) and "General" not in line:
+                if plane != "" :
+                    if not checkEntry(stats[plane],params):
+                        del stats[plane]  
+                    else:
+                        stats[plane]["KD"] = getKD(stats[plane])  
+                
                 plane = cleaner(line.strip())
                 stats[plane] = {}
                 continue
@@ -132,29 +144,27 @@ def getReq(stats, req):
     return ret
 
 def getWorst(stats, battlemin, ct):
-    h = []
+    h = CH.objHeap("KD", False)
     ret = []
     for plane in stats:
-        if getKD(stats[plane]) and haskey(stats[plane], "Battles") and stats[plane]["Battles"]>=battlemin:
-            newDict = dcpy(stats[plane])
-            newDict["plane"] = plane
-            heapq.heappush(h, (getKD(newDict), newDict))
+        newDict = dcpy(stats[plane])
+        newDict["plane"] = plane
+        h.push(newDict)
     
     for i in range(0,ct):
-        ret.append(heapq.heappop(h)[1])
+        ret.append(h.pop())
     return ret
 
 def getBest(stats, battlemin, ct):
-    h = []
+    h = CH.objHeap("KD", True)
     ret = []
     for plane in stats:
-        if getKD(stats[plane]) and haskey(stats[plane], "Battles") and stats[plane]["Battles"]>=battlemin:
-            newDict = dcpy(stats[plane])
-            newDict["plane"] = plane
-            heapq.heappush(h, ((1/getKD(newDict)), newDict))
+        newDict = dcpy(stats[plane])
+        newDict["plane"] = plane
+        h.push(newDict)
     
     for i in range(0,ct):
-        ret.append(heapq.heappop(h)[1])
+        ret.append(h.pop())
     return ret
     
 
@@ -171,17 +181,14 @@ def getKD(plane):
 
 
 
-"""
-me = getStats("simhendramadhya_", "fighters")
-worst = getWorst(me, 50, 3)
-print(stroutArr(worst))
-"""
+
+
 def req_stat_plane(username, searchStr):
     return stroutStats(getReq(getStats(username), searchStr))
 
 def req_worst(username, battlemin, ct):
     return stroutArr(getWorst(getStats(username),battlemin, ct))
-    
+
 def req_best(username, battlemin, ct):
     return stroutArr(getBest(getStats(username),battlemin,ct))
 
