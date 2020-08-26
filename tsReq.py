@@ -81,7 +81,7 @@ def stroutArr(plist):
         ret += ("-----------\n")
         ret += plane["plane"] + "\n" 
         for key2 in plane:
-            if "plane" not in key2:
+            if "plane" not in key2 and "Victories" not in key2 and "Defeats" not in key2 and "KD" not in key2:
                 ret+=("     {cat} : {entry} \n".format(cat=key2, entry=plane[key2]))
     return ret
 
