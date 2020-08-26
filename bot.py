@@ -11,6 +11,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    if message.content == 'help shame':
+        await message.channel.send("```\n cherrypick [username] [plane] gives someones stats in specified aircraft \n shame/shamekb [username] [optional number to output] [optional min battles] gives someones worst planes sorted by KD/KB \n flex/flexkb [username] [optional number to output] [optional min battles] gives someones best planes sorted by KD/KB \n ```")
     if message.content == 'shame DEFYN' or message.content == 'shame doof':
         await message.channel.send("Defyn is a fat whore")
     if message.content.startswith('cherrypick'):
