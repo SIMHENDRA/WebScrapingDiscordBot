@@ -7,7 +7,7 @@ class objHeap:
         self.dir = isMaxHeap
         self.size = 0
 
-    def compare(self, A, B): #returns true if A has higher priority than B, False if lower or equal priority to B
+    def priocomp(self, A, B): #returns true if A has higher priority than B, False if lower or equal priority to B
         if dir:
             if A[cat] > B[cat]:
                 return True
@@ -52,7 +52,7 @@ class objHeap:
         ind = self.size-1
         while (ind != 0):
             par = self.getPar(ind)
-            if self.compare(plane, self.H(par)):
+            if self.priocomp(plane, self.H(par)):
                 self.swap(ind, par)
                 ind = par
             else:
@@ -64,17 +64,17 @@ class objHeap:
         r = self.getR(ind)
         m = self.getL(ind)
         if r == -1:
-            if self.compare(self.H[m], self.H[ind]):
+            if self.priocomp(self.H[m], self.H[ind]):
                 self.swap(m, ind)
                 self.adj(m)
             return
         else:
-            if self.compare(self.H[m], self.H[r]):
-                if self.compare(self.H[m], self.H[ind]):
+            if self.priocomp(self.H[m], self.H[r]):
+                if self.priocomp(self.H[m], self.H[ind]):
                     self.swap(m, ind)
                     self.adj(m)
             else:
-                if self.compare(self.H[r], self.H[ind]):
+                if self.priocomp(self.H[r], self.H[ind]):
                     self.swap(r, ind)
                     self.adj(r)
             return
