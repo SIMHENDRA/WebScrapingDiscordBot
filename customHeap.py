@@ -8,16 +8,16 @@ class objHeap:
         self.size = 0
 
     def priocomp(self, A, B): #returns true if A has higher priority than B, False if lower or equal priority to B
-        if dir:
+        if self.dir:
             if A[self.cat] > B[self.cat]:
                 return True
             else:
                 return False
         else:
-            if A[self.cat] < B[self.cat]:
-                return True
-            else:
+            if A[self.cat] > B[self.cat]:
                 return False
+            else:
+                return True
 
     def isLeaf(self, ind):
         if 2*ind > (self.size-1):
