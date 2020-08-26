@@ -9,7 +9,7 @@ class objHeap:
 
     def push(self, plane):
         self.size += 1
-        H.append(plane)
+        self.H.append(plane)
         ind = self.size-1
         while (ind != 0):
             par = getPar(ind)

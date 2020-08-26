@@ -147,9 +147,10 @@ def getWorst(stats, battlemin, ct):
     h = CH.objHeap("KD", False)
     ret = []
     for plane in stats:
-        newDict = dcpy(stats[plane])
-        newDict["plane"] = plane
-        h.push(newDict)
+        if stats[plane]["Battles"] >= battlemin:
+            newDict = dcpy(stats[plane])
+            newDict["plane"] = plane
+            h.push(newDict)
     
     for i in range(0,ct):
         ret.append(h.pop())
@@ -159,9 +160,10 @@ def getBest(stats, battlemin, ct):
     h = CH.objHeap("KD", True)
     ret = []
     for plane in stats:
-        newDict = dcpy(stats[plane])
-        newDict["plane"] = plane
-        h.push(newDict)
+        if stats[plane]["Battles"] >= battlemin:
+            newDict = dcpy(stats[plane])
+            newDict["plane"] = plane
+            h.push(newDict)
     
     for i in range(0,ct):
         ret.append(h.pop())
