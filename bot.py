@@ -88,4 +88,5 @@ async def on_message(message):
             await message.channel.send("```\n"+"BAD INPUT\n"+"```")
     return
 
+print(sys.argv[1])
 client.run(sys.argv[1])
