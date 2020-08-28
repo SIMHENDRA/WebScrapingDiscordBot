@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import tsReq
 import traceback
+import sys
 
 client = commands.Bot(command_prefix='.')
 
@@ -87,4 +88,4 @@ async def on_message(message):
             await message.channel.send("```\n"+"BAD INPUT\n"+"```")
     return
 
-client.run()
+client.run(sys.argv[1])
