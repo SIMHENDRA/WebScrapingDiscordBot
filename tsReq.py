@@ -1,4 +1,4 @@
-ps aimport requests
+import requests
 from bs4 import BeautifulSoup as soup
 import re
 import os
