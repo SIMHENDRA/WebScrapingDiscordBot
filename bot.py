@@ -89,4 +89,5 @@ async def on_message(message):
     return
 
 print(sys.argv[1])
-client.run(sys.argv[1])
+while (True):
+    client.run(sys.argv[1])
