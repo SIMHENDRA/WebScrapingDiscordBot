@@ -2,5 +2,5 @@
 while :
 do
     echo "starting."
-    python bot.py $1
+    python3 bot.py $1
 done
