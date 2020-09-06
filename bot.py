@@ -24,6 +24,7 @@ async def on_message(message):
             + "\n" 
             + tsReq.req_stat_plane(commands[1],commands[2])
             + "```")
+            await message.channel.send("```\n Stats are not guaranteed correct (ssn's lightning for example)\n```")
             return
         except:
             traceback.print_exc()
@@ -53,6 +54,7 @@ async def on_message(message):
                 + " is trash\n" 
                 + tsReq.req_worst(commands[1],int(commands[3]),int(commands[2]),mode) 
                 + "```" )
+            await message.channel.send("```\n Stats are not guaranteed correct (ssn's lightning for example)\n```")
             return
         except:
             traceback.print_exc()
@@ -82,6 +84,7 @@ async def on_message(message):
                 + " is trash\n" 
                 + tsReq.req_best(commands[1],int(commands[3]),int(commands[2]),mode) 
                 + "```" )
+            await message.channel.send("```\n Stats are not guaranteed correct (ssn's lightning for example)\n```")
             return
         except:
             traceback.print_exc()
