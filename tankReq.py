@@ -94,9 +94,9 @@ def stroutPlane(plane, name):
     return ret
 
 
-def getStats(username, role="all"):
+def getStats(username, role="all"): #second input not used
     
-    myurl = "http://thunderskill.com/en/stat/"+username+"/vehicles/r#type=army&role="+role+"&country=all"
+    myurl = "http://thunderskill.com/en/stat/"+username+"/vehicles/r#type=army&role=all&country=all"
 
     response = requests.get(myurl)
 
