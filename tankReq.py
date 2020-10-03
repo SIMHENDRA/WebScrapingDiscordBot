@@ -94,7 +94,7 @@ def stroutPlane(plane, name):
     return ret
 
 
-def getStats(username, role="fighters"):
+def getStats(username, role="all"):
     
     myurl = "http://thunderskill.com/en/stat/"+username+"/vehicles/r#type=army&role="+role+"&country=all"
 
