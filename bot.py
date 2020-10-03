@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import tsReq
+import tankReq
 import traceback
 import sys
 #test track
@@ -83,6 +84,80 @@ async def on_message(message):
                 + commands[1] 
                 + " is trash\n" 
                 + tsReq.req_best(commands[1],int(commands[3]),int(commands[2]),mode) 
+                + "```" )
+            await message.channel.send("```\n Stats are not guaranteed correct (ssn's lightning for example)\n```")
+            return
+        except:
+            traceback.print_exc()
+            await message.channel.send("```\n"+"BAD INPUT\n"+"```")
+
+    elif message.content.startswith('tcherrypick'):
+        commands = message.content.split(" ")
+        try:
+            await message.channel.send("```\nShame on " 
+            + commands[1] 
+            + "\n" 
+            + tankReq.req_stat_plane(commands[1],commands[2])
+            + "```")
+            await message.channel.send("```\n Stats are not guaranteed correct (ssn's lightning for example)\n```")
+            return
+        except:
+            traceback.print_exc()
+            await message.channel.send("```\nBad Input\n```")
+            return
+    elif message.content.startswith('tshame'):
+        commands = message.content.split(" ")
+        if len(commands[0]) > 6:
+            mode = "KB"
+        else:
+            mode = "KD"
+        try:
+            if len(commands) == 3:
+                await message.channel.send("```\n" 
+                + commands[1] 
+                + " is trash\n" 
+                + tankReq.req_worst(commands[1],50,int(commands[2]),mode) 
+                + "```" )
+            elif len(commands) == 2:
+                await message.channel.send("```\n" 
+                + commands[1] 
+                + " is trash\n" 
+                + tankReq.req_worst(commands[1],50,3,mode) + "```" )
+            elif len(commands) == 4:
+                await message.channel.send("```\n" 
+                + commands[1] 
+                + " is trash\n" 
+                + tankReq.req_worst(commands[1],int(commands[3]),int(commands[2]),mode) 
+                + "```" )
+            await message.channel.send("```\n Stats are not guaranteed correct (ssn's lightning for example)\n```")
+            return
+        except:
+            traceback.print_exc()
+            await message.channel.send("```\n"+"BAD INPUT\n"+"```")
+    elif message.content.startswith("tflex"):
+        commands = message.content.split(" ")
+        if len(commands[0]) > 5:
+            mode = "KB"
+        else:
+            mode = "KD"
+        try:
+            if len(commands) == 3:
+                await message.channel.send("```\n" 
+                + commands[1] 
+                + " is trash\n" 
+                + tankReq.req_best(commands[1],50,int(commands[2]),mode) 
+                + "```" )
+            elif len(commands) == 2:
+                await message.channel.send("```\n" 
+                + commands[1] 
+                + " is trash\n" 
+                + tankReq.req_best(commands[1],50,3,mode) 
+                + "```" )
+            elif len(commands) == 4:
+                await message.channel.send("```\n" 
+                + commands[1] 
+                + " is trash\n" 
+                + tankReq.req_best(commands[1],int(commands[3]),int(commands[2]),mode) 
                 + "```" )
             await message.channel.send("```\n Stats are not guaranteed correct (ssn's lightning for example)\n```")
             return
