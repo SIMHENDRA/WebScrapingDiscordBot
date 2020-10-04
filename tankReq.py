@@ -96,9 +96,9 @@ def stroutPlane(plane, name):
 
 def getStats(username, role="all"): #second input not used
     
-    myurl = "http://thunderskill.com/en/stat/"+username+"/vehicles/r#type=army&role=all&country=all"
+    myurl = "http://thunderskill.com/en/stat/"+username+"/vehicles/r"      ###type=army&role=all&country=all"
 
-    response = requests.get(myurl)
+    response = requests.get(myurl, params={'type':'army'})
 
     sp = soup(response.content, 'html.parser')
     table = sp.find_all('table')[0]
