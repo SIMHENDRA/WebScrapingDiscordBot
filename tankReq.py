@@ -101,7 +101,7 @@ def getStats(username, role="all"): #second input not used
     response = requests.get(myurl, params={'type':'army'})
 
     sp = soup(response.content, 'html.parser')
-    table = sp.find_all('table')[0]
+    table = sp.find_all('table')[1]
 
     f = open("resp2.txt", "w", encoding="utf-8")
     for row in table.find_all('tr'):
